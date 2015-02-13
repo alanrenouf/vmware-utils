@@ -1,8 +1,8 @@
-# vmware-utils
+# vmware-utils DockerFile
 
 Docker Image to deploy various VMware and open source related tools to manage a VMware environment
 
-Why? 
+# Why? 
 
 Most VMware Admins create their own box and modify the vMA so much that it becomes a problem when its time to upgrade to the latest version, this way they can easily build their own box and add their own scripts.
 
@@ -11,7 +11,7 @@ Most VMware Admins create their own box and modify the vMA so much that it becom
 3. Download / Clone the Dockerfile from this project
 
 
-Example folder structure
+# Example folder structure
 .
 └── VMware-Utils
     ├── Dockerfile
@@ -20,11 +20,11 @@ Example folder structure
 
 That's it, now just use docker to deploy the image and watch as these and multiple other community projects and scripts are automatically downloaded.
 
-Example Build
+# Example Build
 1. CD into the file with the bits from above (VMware-Utils in my example).
 2. sudo docker build -t alanrenouf/vmware-utils .
 
-Example run
+# Example run
 
 alan@ubuntu:~/docker$ sudo docker run --rm -it alanrenouf/vmware-utils
 root@b649422a095a:/tmp# vicfg-
