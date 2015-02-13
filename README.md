@@ -31,5 +31,47 @@ root@b649422a095a:/tmp# vicfg-
 vicfg-advcfg      vicfg-dns         vicfg-ipsec       vicfg-mpath       vicfg-nics        vicfg-route       vicfg-syslog      vicfg-volume      
 vicfg-authconfig  vicfg-dumppart    vicfg-iscsi       vicfg-mpath35     vicfg-ntp         vicfg-scsidevs    vicfg-user        vicfg-vswitch     
 vicfg-cfgbackup   vicfg-hostops     vicfg-module      vicfg-nas         vicfg-rescan      vicfg-snmp        vicfg-vmknic      
-root@b649422a095a:/tmp#
+root@b649422a095a:/tmp# cd /root/vghetto/perl
+root@b649422a095a:~/vghetto/perl# ls
+addHostCustomField.pl                  getAllPowedOffVMs.pl                    hostops-lamw.pl                          updateDCUIBanner.pl
+addVMAdvParamOption.pl                 getAllVMGuestHostname.pl                inefficent-upload-files-to-datastore.pl  updateVMBootOrder.pl
+addVMAnnotation.pl                     getAllVMMacs.pl                         ipmiSettings.pl                          updateVMManagedBy.pl
+addVMCustomField.pl                    getAssetTag.pl                          licenseManagement.pl                     updateVMPortgroup.pl
+addvSwitchWSecurityPolicy.pl           getDatastoreUUID.pl                     listDatastoreFiles.pl                    updateVMReservations.pl
+alarmManagement.pl                     getESXi5Hosts.pl                        listHAClusterNodes.pl                    updateVMToolsPolicy.pl
+cdp.pl                                 getESXiHosts.pl                         listVMByFolder.pl                        upgradeVMVirtualHardware.pl
+changeBlockTrackingManagement.pl       getEsxtop.pl                            listVMsInResourcePool.pl                 useVIFastpassOnvMAToRunPerlScriptWithoutClearTextPassword.pl
+changeGuestOSID.pl                     getHostHardwareHealthInfo.pl            lunManagement.pl                         vAppManagement.pl
+changeVMStoragePolicy.pl               getNumberOfvMotions.pl                  migratevFRCVM.pl                         vCenterAdvSettingMgmt.pl
+checkESXiVersion.pl                    getNumofvCPUInCluster.pl                moRefFinder.pl                           vCloudVMLinkedClonesMapping.pl
+checkLicenseServer.pl                  getRealVMDiskFormat.pl                  monitorUserLoginAlarm.pl                 vGhettoLinkedClone.pl
+configureAdvHAClusterOptions.pl        getSSOUserExpiration.pl                 patch-host.pl                            vaaiHWAccelerationMgmt.pl
+createResourcepool.pl                  getSupportedGuestOSes.pl                perfQuery.pl                             vflashHostMgmt.pl
+createRole.pl                          getSupportedVirtualHardwareVersion.pl   pluginExtensionManager.pl                vflashVMMgmt.pl
+datastoreClusterManagement.pl          getVINData.pl                           poweroff_suspend_vm.pl                   vmDiskSharesMgmt.pl
+datastoreClusterVMProvisioning.pl      getVMAppStatus.pl                       provisionedVMReport.pl                   vmISOManagement.pl
+efficent-upload-files-to-datastore.pl  getVMDiskCID.pl                         queryDeletedVMs.pl                       vmNICManagement.pl
+enable16PlusVSANNodeSupport.pl         getVMDiskFormat.pl                      queryDiskParition.pl                     vmVMDKToDatastoreToDeviceMapping.pl
+enumeratevifp40.pl                     getVMDiskInfo.pl                        querySvMotionVDSIssue.pl                 vmdkManagement.pl
+enumeratevifp41.pl                     getVMMoRefID.pl                         queryVMCustomField.pl                    vmkfstools-lamw
+esxcfg-perf.pl                         getVMThinProvisionedSavings.pl          queryVMsCreated.pl                       vmwareHealthCheck.pl
+esxcfg-portgroup-mgmt.pl               getVMToolsStatus.pl                     queryVSANVMStoragePolicyMapping.pl       vmwarevSphereHealthCheck.pl
+esxcfg-rename-datastore.pl             getVMonShareableAndNonSharDatastore.pl  queryvCenterCustomFields.pl              vmwarevSphereSecurityHardeningReportCheck.pl
+esxcfg-vswitch-lamw-mod.pl             getVMsPerDatastore.pl                   rdmManagmement.pl                        vsanClusterManagement.pl
+esxcli-automation.pl                   getVMsResourcePools.pl                  registerCustomSolution.pl                vsanConfigMaximumCheck.pl
+executeCommandUsingFastPass.pl         getVscsiStats.pl                        registerVMX.pl                           vsanDatstoreFolderMgmt.pl
+factoryResetESXi.pl                    getWWPN.pl                              remediateSvMotionVDSIssue.pl             vsanDiskHealth.pl
+findLopsidedBootbanks.pl               getdvSwitchInfo.pl                      removeHostFromvCenterByForce.pl          vsanDiskStatsQueries.pl
+findVMsWithRDMs.pl                     getvSwitchMacTable.pl                   removeOrphansFromvCenter.pl              vsanFlashAndMDCapacity.pl
+floppyManagement.pl                    getvswif.pl                             renameLocalStorageDatastore.pl           vsanHostDiskMapping.pl
+ftCLI.pl                               ghettoCloneVM.pl                        rescanAllHBAInCluster.pl                 vsanHostMaintenanceMode.pl
+ftCLI2.pl                              ghettoHostBackupManagement.pl           sessionManagement.pl                     vsanHostStatus.pl
+generateDCUIScreen.pl                  ghettoHostProfile.pl                    setOvfEnv.pl                             vsanHostTrafficTypeMgmt.pl
+generateESXiHostsList.pl               ghettoUPSHostShutdown.pl                setUserDatastorePermission.pl            vsanQueryDisksForUse.pl
+generateHTML5VMConsole.pl              ghettoVCBg2.pl                          setVMAgeCustomField.pl                   wheresMyCOSVMDKAt.pl
+generateHostConfigurationWorksheet.pl  guestOpsManagement.pl                   shutdownHostViaSOAPAPICall.pl            whichClusterIsMyVMIn.pl
+generateLogBundle.pl                   hostCacheManagement.pl                  siocManagement.pl
+generateVMList.pl                      hostOperations.pl                       storageProfileMgmt.pl
+generateVMRemoteConsoleURL.pl          hostServiceManagement.pl                takeVMScreenshot.pl
+root@b649422a095a:~/vghetto/perl#
 ```
