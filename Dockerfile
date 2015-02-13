@@ -5,38 +5,55 @@ MAINTAINER renoufa@vmware.com
 RUN apt-get update
 
 # Install vCLI Pre-Reqs
-RUN apt-get install -yq build-essential gcc uuid uuid-dev perl libxml-libxml-perl perl-doc libssl-dev e2fsprogs libarchive-zip-perl libcrypt-ssleay-perl libclass-methodmaker-perl libdata-dump-perl libsoap-lite-perl git expect python python-dev python-pip python-virtualenv ruby-full make gem
-
-# Clean up apt-get
-RUN apt-get clean
+RUN apt-get install -yq build-essential \
+      gcc \
+      uuid \
+      uuid-dev \
+      perl \
+      libxml-libxml-perl \
+      perl-doc \
+      libssl-dev \
+      e2fsprogs \
+      libarchive-zip-perl \
+      libcrypt-ssleay-perl \
+      libclass-methodmaker-perl \
+      libdata-dump-perl \
+      libsoap-lite-perl \
+      git \
+      expect \
+      python \
+      python-dev \
+      python-pip \
+      python-virtualenv \
+      ruby-full \
+      make \
+      gem && \
+    apt-get clean
 
 # Set the working directory to /root
 WORKDIR /tmp
 
-# Install vCLI
+# Install vCLI https://developercenter.vmware.com/web/dp/tool/vsphere_cli/5.5
 ADD VMware-vSphere-CLI-5.5.0-2043780.x86_64.tar /tmp/
-RUN yes | /tmp/vmware-vsphere-cli-distrib/vmware-install.pl -d \
-    && rm -rf vmware-vsphere-cli-distrib \
+RUN yes | /tmp/vmware-vsphere-cli-distrib/vmware-install.pl -d && \
+    rm -rf vmware-vsphere-cli-distrib
 
 # Add William Lams awesome scripts from vGhetto Script Repository
-RUN mkdir /root/vghetto
-RUN git clone https://github.com/lamw/vghetto-scripts.git /root/vghetto
+RUN mkdir /root/vghetto && \
+    git clone https://github.com/lamw/vghetto-scripts.git /root/vghetto
 
 # Add pyVmomi
-RUN pip install --upgrade pyvmomi
-RUN mkdir /root/pyvmomi
-RUN git clone https://github.com/vmware/pyvmomi.git /root/pyvmomi
+RUN pip install --upgrade pyvmomi vca-cli && \
+    mkdir /root/pyvmomi && \
+    git clone https://github.com/vmware/pyvmomi.git /root/pyvmomi
 
-# Add RbVmomi
-RUN gem install rbvmomi
+# Add RbVmomi, rvc, vcloud-tools
+RUN gem install rbvmomi rvc vcloud-tools
 
-# Add RVC
-RUN gem install rvc
-
-# Add VMware OVFTool
+# Add VMware OVFTool http://vmware.com/go/ovftool
 ADD VMware-ovftool-4.0.0-2301625-lin.x86_64.bundle /tmp/
-RUN yes | /bin/bash VMware-ovftool-4.0.0-2301625-lin.x86_64.bundle --required --console \
-    && rm -f /tmp/VMware-ovftool-4.0.0-2301625-lin.x86_64.bundle \
+RUN yes | /bin/bash VMware-ovftool-4.0.0-2301625-lin.x86_64.bundle --required --console && \
+    rm -f /tmp/VMware-ovftool-4.0.0-2301625-lin.x86_64.bundle
 
 # Run Bash when the image starts
 CMD ["/bin/bash"]
