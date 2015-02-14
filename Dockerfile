@@ -21,6 +21,8 @@ RUN apt-get install -yq build-essential \
       libclass-methodmaker-perl \
       libdata-dump-perl \
       libsoap-lite-perl \
+      libssl-dev \
+      libffi-dev \
       wget \
       git \
       expect \
@@ -53,8 +55,8 @@ RUN pip install pyvmomi && \
     mkdir /root/pyvmomi && \
     git clone https://github.com/vmware/pyvmomi.git /root/pyvmomi
 
-# Add vCloud Air CLI - Commented out as fails at the moment - Issue raised https://github.com/vmware/vca-cli/issues/9
-# RUN pip install vca-cli
+# Add vCloud Air CLI
+RUN pip install vca-cli
 
 # Add RbVmomi
 RUN gem install rbvmomi
