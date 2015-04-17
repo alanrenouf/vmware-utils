@@ -55,10 +55,10 @@ Next, you will need to create a new directory to store the five files you have j
 ```
 vmware-utils
 ├── Dockerfile
-├── VMware-ovftool-4.0.0-2301625-lin.x86_64.bundle
+├── VMware-ovftool-4.1.0-2459827-lin.x86_64.bundle
 ├── VMware-vSphere-CLI-5.5.0-2043780.x86_64.tar.gz
 ├── VMware-vix-disklib-5.5.4-2454786.x86_64.tar.gz
-└── cloudclient-3.1.0-2375258-dist.zip
+└── cloudclient-3.2.0-2594179-dist.zip
 ```
 
 Now you are ready to build your container!
