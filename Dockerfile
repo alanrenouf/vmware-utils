@@ -58,11 +58,10 @@ RUN gem install rbvmomi rvc
 RUN git clone https://github.com/vmware/pyvmomi.git /root/pyvmomi
 
 # Install govc CLI
-RUN apt-get install -yq golang
-ENV GOPATH /root/src/go
-RUN mkdir -p $GOPATH
-ENV PATH $PATH:$GOPATH/bin
-RUN go get github.com/vmware/govmomi/govc
+ADD https://github.com/vmware/govmomi/releases/download/v0.1.0/govc_linux_amd64.gz /tmp/
+RUN gunzip /tmp/govc_linux_amd64.gz
+RUN mv /tmp/govc_linux_amd64 /usr/local/bin/govc
+RUN chmod a+x /usr/local/bin/govc
 
 # Install VDDK
 ADD VMware-vix-disklib-5.5.4-2454786.x86_64.tar.gz /tmp/
