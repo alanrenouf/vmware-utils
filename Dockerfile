@@ -12,6 +12,7 @@ RUN apt-get update
 # Install vCLI Pre-Reqs
 RUN apt-get install -yq build-essential \
       gcc \
+      gcc-multilib \
       uuid \
       uuid-dev \
       perl \
