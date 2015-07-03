@@ -52,7 +52,8 @@ RUN mkdir /root/vghetto && \
   git clone https://github.com/lamw/vghetto-scripts.git /root/vghetto
 
 # Install rbVmomi &  RVC
-RUN gem install rbvmomi rvc
+RUN gem install rbvmomi rvc ffi
+ENV RVC_READLINE /usr/lib/ruby/1.9.1/x86_64-linux/readline.so
 
 # Install pyVmomi (vSphere SDK for Python)
 RUN git clone https://github.com/vmware/pyvmomi.git /root/pyvmomi
