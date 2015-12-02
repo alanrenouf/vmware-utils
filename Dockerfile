@@ -34,8 +34,13 @@ RUN apt-get install -yq build-essential \
       make \
       unzip \
       gem \
+      software-properties-common \
       default-jre && \
     apt-get clean
+
+RUN apt-add-repository ppa:evarlast/golang1.4
+RUN apt-get update
+
 
 # Install vCLI https://developercenter.vmware.com/web/dp/tool/vsphere_cli/5.5
 ADD VMware-vSphere-CLI-5.5.0-2043780.x86_64.tar.gz /tmp/
@@ -88,15 +93,19 @@ RUN pip install pyvcloud
 
 ## -------- vCloud Director -------- ##
 
+# Install gem that plays nice with ruby 1.9.x
+RUN gem install --no-rdoc --no-ri fog-google -v 0.1.0
+RUN gem install --no-rdoc --no-ri vcloud-launcher -v 1.1.0
+
 # Install vcloud-tools
 RUN gem install --no-rdoc --no-ri vcloud-tools
 
 ## vRealize Management Suite ##
 
-# Install Cloud Client http://developercenter.vmware.com/web/dp/tool/cloudclient/3.1.0
-ADD cloudclient-3.1.0-2375258-dist.zip /tmp/
-RUN unzip /tmp/cloudclient-3.1.0-2375258-dist.zip -d /root
-RUN rm -rf /tmp/cloudclient-3.1.0-2375258-dist.zip
+# Install Cloud Client http://developercenter.vmware.com/web/dp/tool/cloudclient/3.2.0
+ADD cloudclient-3.3.1-2966416-dist.zip /tmp/
+RUN unzip /tmp/cloudclient-3.3.1-2966416-dist.zip -d /root
+RUN rm -f /tmp/cloudclient-3.3.1-2966416-dist.zip
 
 # Run Bash when the image starts
 CMD ["/bin/bash"]
