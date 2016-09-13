@@ -45,7 +45,7 @@ This Dockerfile will create a Docker Container and install the following VMware 
 To use this Dockerfile, you will first need to first download the following files from VMware's website (which you must register to do so)
 
 1. Download the latest version of vSphere CLI for vSphere 5.5 from here: https://developercenter.vmware.com/web/dp/tool/vsphere_cli/5.5
-2. Download the latest version of VMware OVF Tool for Linux 64-bit from here: https://my.vmware.com/web/vmware/details?downloadGroup=OVFTOOL400&productId=353
+2. Download the latest version of VMware OVF Tool for Linux 64-bit from here: https://my.vmware.com/web/vmware/details?downloadGroup=OVFTOOL410&productId=491
 3. Download the latest version of vSphere Virtual DIska Manager for Linux 64-bit from here: https://my.vmware.com/web/vmware/details?downloadGroup=VDDK554&productId=353
 4. Download the latest version of the vRealize Cloud Client from here: http://developercenter.vmware.com/web/dp/tool/cloudclient/3.2.0
 5. Download / Clone the Dockerfile from this project
@@ -55,10 +55,14 @@ Next, you will need to create a new directory to store the five files you have j
 ```
 vmware-utils
 ├── Dockerfile
-├── VMware-ovftool-4.0.0-2301625-lin.x86_64.bundle
+├── VMware-ovftool-4.1.0-2459827-lin.x86_64.bundle
 ├── VMware-vSphere-CLI-5.5.0-2043780.x86_64.tar.gz
 ├── VMware-vix-disklib-5.5.4-2454786.x86_64.tar.gz
+<<<<<<< HEAD
 └── cloudclient-3.3.1-2966416-dist.zip
+=======
+└── cloudclient-3.2.0-2594179-dist.zip
+>>>>>>> origin/master
 ```
 
 Now you are ready to build your container!
