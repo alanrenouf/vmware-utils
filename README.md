@@ -47,7 +47,7 @@ To use this Dockerfile, you will first need to first download the following file
 1. Download the latest version of vSphere CLI for vSphere 5.5 from here: https://developercenter.vmware.com/web/dp/tool/vsphere_cli/5.5
 2. Download the latest version of VMware OVF Tool for Linux 64-bit from here: https://my.vmware.com/web/vmware/details?downloadGroup=OVFTOOL400&productId=353
 3. Download the latest version of vSphere Virtual DIska Manager for Linux 64-bit from here: https://my.vmware.com/web/vmware/details?downloadGroup=VDDK554&productId=353
-4. Download the latest version of the vRealize Cloud Client from here: http://developercenter.vmware.com/web/dp/tool/cloudclient/3.1.0
+4. Download the latest version of the vRealize Cloud Client from here: http://developercenter.vmware.com/web/dp/tool/cloudclient/3.2.0
 5. Download / Clone the Dockerfile from this project
 
 Next, you will need to create a new directory to store the five files you have just downloaded. In this example, I have just created a simple directory called "vmware-utils" and here is an example of the directory structure:
@@ -58,7 +58,7 @@ vmware-utils
 ├── VMware-ovftool-4.0.0-2301625-lin.x86_64.bundle
 ├── VMware-vSphere-CLI-5.5.0-2043780.x86_64.tar.gz
 ├── VMware-vix-disklib-5.5.4-2454786.x86_64.tar.gz
-└── cloudclient-3.1.0-2375258-dist.zip
+└── cloudclient-3.3.1-2966416-dist.zip
 ```
 
 Now you are ready to build your container!
@@ -85,7 +85,7 @@ At this point you are now logged into the Container that you have just built and
 
 ```console
 root@9fcb6949d2c6:~# ls
-cloudclient-3.1.0-2375258  pyvmomi  src  vghetto
+cloudclient-3.1.3-2966416  pyvmomi  src  vghetto
 ```
 
 ## Accessing vCLI Commands

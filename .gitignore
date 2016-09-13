@@ -1,0 +1,5 @@
+*.sw?
+VMware-ovftool-4.0.0-2301625-lin.x86_64.bundle
+VMware-vSphere-CLI-5.5.0-2043780.x86_64.tar.gz
+VMware-vix-disklib-5.5.4-2454786.x86_64.tar.gz
+cloudclient-3.3.1-2966416-dist.zip
