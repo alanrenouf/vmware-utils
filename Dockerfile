@@ -103,17 +103,10 @@ RUN gem install --no-rdoc --no-ri vcloud-tools
 
 ## vRealize Management Suite ##
 
-<<<<<<< HEAD
 # Install Cloud Client http://developercenter.vmware.com/web/dp/tool/cloudclient/3.2.0
 ADD cloudclient-3.3.1-2966416-dist.zip /tmp/
 RUN unzip /tmp/cloudclient-3.3.1-2966416-dist.zip -d /root
 RUN rm -f /tmp/cloudclient-3.3.1-2966416-dist.zip
-=======
-# Install Cloud Client http://developercenter.vmware.com/web/dp/tool/cloudclient/3.1.0
-ADD cloudclient-3.2.0-2594179-dist.zip /tmp/
-RUN unzip /tmp/cloudclient-3.2.0-2594179-dist.zip -d /root
-RUN rm -rf /tmp/cloudclient-3.2.0-2594179-dist.zip
->>>>>>> origin/master
 
 # Run Bash when the image starts
 CMD ["/bin/bash"]

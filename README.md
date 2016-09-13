@@ -58,11 +58,7 @@ vmware-utils
 ├── VMware-ovftool-4.1.0-2459827-lin.x86_64.bundle
 ├── VMware-vSphere-CLI-5.5.0-2043780.x86_64.tar.gz
 ├── VMware-vix-disklib-5.5.4-2454786.x86_64.tar.gz
-<<<<<<< HEAD
 └── cloudclient-3.3.1-2966416-dist.zip
-=======
-└── cloudclient-3.2.0-2594179-dist.zip
->>>>>>> origin/master
 ```
 
 Now you are ready to build your container!
