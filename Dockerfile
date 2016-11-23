@@ -1,16 +1,29 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 MAINTAINER renoufa@vmware.com
 
-# Set the working directory to /root
+# Updated to all vSphere 6.5 tools by @lamw
+
 WORKDIR /root
 
-# Update apt-get
-RUN apt-get update
+#### ---- Installer Files ---- ####
 
-## -------- vSphere -------- ##
+ARG VSPHERE65_SDK_PERL=VMware-vSphere-CLI-6.5.0-4566394.x86_64.tar.gz
+ARG VSPHERE65_MGMT_SDK=VMware-vSphereSDK-6.5.0-4571253.zip
+ARG VSPHERE65_AUTOMATION_SDK_RUBY=VMware-vSphere-Automation-SDK-Ruby-6.5.0-4571906.zip
+ARG VSPHERE65_AUTOMATION_SDK_PYTHON=VMware-vSphere-Automation-SDK-Python-6.5.0-4571810.zip
+ARG VSPHERE65_AUTOMATION_SDK_PERL=VMware-vSphere-Automation-SDK-Perl-6.5.0-4571819.zip
+ARG VSPHERE65_AUTOMATION_SDK_JAVA=VMware-vSphere-Automation-SDK-Java-6.5.0-4571808.zip
+ARG VSAN65_SDK_RUBY=vsan-sdk-65-ruby-4602587.zip
+ARG VSAN65_SDK_PYTHON=vsan-sdk-65-python-4602587.zip
+ARG VSAN65_SDK_JAVA=vsan-sdk-65-java-4602587.zip
+ARG VSAN65_SDK_PERL=vsan-sdk-65-perl-4602587.zip
+ARG VDDK65=VMware-vix-disklib-6.5.0-4604867.x86_64.tar.gz
+ARG OVFTOOl42=VMware-ovftool-4.2.0-4586971-lin.x86_64.bundle
 
-# Install vCLI Pre-Reqs
-RUN apt-get install -yq build-essential \
+#### ---- Install Package Dependencies ---- ####
+
+RUN apt-get update && \
+      apt-get install -yq build-essential \
       gcc \
       gcc-multilib \
       uuid \
@@ -36,77 +49,134 @@ RUN apt-get install -yq build-essential \
       unzip \
       gem \
       software-properties-common \
-      default-jre && \
-    apt-get clean
+      default-jre \
+      iputils-ping \
+      module-init-tools \
+      curl \
+      libcurl3 \
+      libunwind8 \
+      libicu55 \
+      vim
+RUN apt-get clean
 
-RUN apt-add-repository ppa:evarlast/golang1.4
-RUN apt-get update
+RUN gem install savon
+RUN pip install --upgrade pip
 
+#### ---- Install vSphere CLI/SDK for Perl 6.5 ---- ####
 
-# Install vCLI https://developercenter.vmware.com/web/dp/tool/vsphere_cli/5.5
-ADD VMware-vSphere-CLI-5.5.0-2043780.x86_64.tar.gz /tmp/
-RUN yes | /tmp/vmware-vsphere-cli-distrib/vmware-install.pl -d && \
-    rm -rf /tmp/vmware-vsphere-cli-distrib
+ADD $VSPHERE65_SDK_PERL /tmp/
+RUN sed -i '2621,2635d' /tmp/vmware-vsphere-cli-distrib/vmware-install.pl
+RUN /tmp/vmware-vsphere-cli-distrib/vmware-install.pl -d EULA_AGREED=yes && \
+  rm -rf /tmp/vmware-vsphere-cli-distrib/
 
-# Install VMware OVFTool http://vmware.com/go/ovftool
-ADD VMware-ovftool-4.1.0-2459827-lin.x86_64.bundle /tmp/
-RUN yes | /bin/bash /tmp/VMware-ovftool-4.1.0-2459827-lin.x86_64.bundle --required --console && \
-    rm -f /tmp/VMware-ovftool-4.1.0-2459827-lin.x86_64.bundle
+#### ---- Install vSphere Automation SDK for Perl 6.5 ---- ####
 
-# Add William Lams awesome scripts from vGhetto Script Repository
-RUN mkdir /root/vghetto && \
-  git clone https://github.com/lamw/vghetto-scripts.git /root/vghetto
+ADD $VSPHERE65_AUTOMATION_SDK_PERL /tmp/
+RUN unzip /tmp/$VSPHERE65_AUTOMATION_SDK_PERL && \
+  rm -f /tmp/$VSPHERE65_AUTOMATION_SDK_PERL
+ENV PERL5LIB=/root/VMware-vSphere-Automation-SDK-Perl-6.5.0/client/lib/sdk:/root/VMware-vSphere-Automation-SDK-Perl-6.5.0/client/lib/runtime:/root/VMware-vSphere-Automation-SDK-Perl-6.5.0/client/samples
 
-# Install rbVmomi &  RVC
-RUN gem install rbvmomi rvc ffi
-ENV RVC_READLINE /usr/lib/ruby/1.9.1/x86_64-linux/readline.so
+#### ---- Install vSphere SDK for Ruby (rbvmomi) 6.5 ---- ####
 
-# Install pyVmomi (vSphere SDK for Python)
-RUN git clone https://github.com/vmware/pyvmomi.git /root/pyvmomi
+RUN gem install rbvmomi
 
-# Install govc CLI
-ADD https://github.com/vmware/govmomi/releases/download/v0.1.0/govc_linux_amd64.gz /tmp/
-RUN gunzip /tmp/govc_linux_amd64.gz
-RUN mv /tmp/govc_linux_amd64 /usr/local/bin/govc
-RUN chmod a+x /usr/local/bin/govc
+#### ---- Install vSphere Automation SDK for Ruby 6.5 ---- ####
 
-# Install VDDK
-ADD VMware-vix-disklib-5.5.4-2454786.x86_64.tar.gz /tmp/
-RUN yes | /tmp/vmware-vix-disklib-distrib/vmware-install.pl -d && \
-  rm -rf /tmp/vmware-vix-disklib-distrib
+ADD $VSPHERE65_AUTOMATION_SDK_RUBY /tmp/
+RUN mkdir -p /root/VMware-vSphere-Automation-SDK-Ruby-6.5.0
+RUN unzip /tmp/$VSPHERE65_AUTOMATION_SDK_RUBY -d /root/VMware-vSphere-Automation-SDK-Ruby-6.5.0 && \
+  rm -f /tmp/$VSPHERE65_AUTOMATION_SDK_RUBY
 
-## -------- vCloud Air -------- ##
+#### ---- Install vSphere SDK for Python (pyvmomi) 6.5 ---- ####
 
-# Install vca-cli
-RUN apt-get install -yq libssl-dev \
-     libffi-dev \
-     libxml2-dev \
-     libxslt-dev && \
-    apt-get clean
-RUN pip install vca-cli
+RUN pip install pyvmomi
 
-# Install RaaS CLI
-RUN gem install RaaS
+#### ---- Install vSphere Automation SDK for Python 6.5 ---- ####
 
-# Install vCloud SDK for Python
-RUN easy_install -U pip
-RUN pip install pyvcloud
+ADD $VSPHERE65_AUTOMATION_SDK_PYTHON /tmp/
+RUN unzip /tmp/$VSPHERE65_AUTOMATION_SDK_PYTHON && \
+  rm -f /tmp/$VSPHERE65_AUTOMATION_SDK_PYTHON
 
-## -------- vCloud Director -------- ##
+#### ---- Install vSphere Management SDK for Java 6.5 ---- ####
 
-# Install gem that plays nice with ruby 1.9.x
-RUN gem install --no-rdoc --no-ri fog-google -v 0.1.0
-RUN gem install --no-rdoc --no-ri vcloud-launcher -v 1.1.0
+ADD $VSPHERE65_MGMT_SDK /tmp/
+RUN unzip /tmp/$VSPHERE65_MGMT_SDK && \
+  rm -f /tmp/$VSPHERE65_MGMT_SDK
+RUN mv /root/SDK /root/vSphere-Management-SDK-6.5
 
-# Install vcloud-tools
-RUN gem install --no-rdoc --no-ri vcloud-tools
+#### ---- Install vSphere Automation SDK for Java 6.5 ---- ####
 
-## vRealize Management Suite ##
+ADD $VSPHERE65_AUTOMATION_SDK_JAVA /tmp/
+RUN unzip /tmp/$VSPHERE65_AUTOMATION_SDK_JAVA && \
+  rm -f /tmp/$VSPHERE65_AUTOMATION_SDK_JAVA
 
-# Install Cloud Client http://developercenter.vmware.com/web/dp/tool/cloudclient/3.2.0
-ADD cloudclient-3.3.1-2966416-dist.zip /tmp/
-RUN unzip /tmp/cloudclient-3.3.1-2966416-dist.zip -d /root
-RUN rm -f /tmp/cloudclient-3.3.1-2966416-dist.zip
+#### ---- Install VSAN Management SDK for Java 6.5 ---- ####
+
+ADD $VSAN65_SDK_JAVA /tmp/
+RUN unzip /tmp/$VSAN65_SDK_JAVA && \
+  rm -f /tmp/$VSAN65_SDK_JAVA
+RUN cp -rf /root/vsan-sdk-java /root/vSphere-Management-SDK-6.5
+
+#### ---- Install VSAN Management SDK for Perl 6.5 ---- ####
+
+ADD $VSAN65_SDK_PERL /tmp/
+RUN unzip /tmp/$VSAN65_SDK_PERL && \
+  rm -f /tmp/$VSAN65_SDK_PERL
+RUN cp /root/vsan-sdk-perl/bindings/*.pm /root/vsan-sdk-perl/samplecode
+
+#### ---- Install VSAN Management SDK for Python 6.5 ---- ####
+
+ADD $VSAN65_SDK_PYTHON /tmp/
+RUN unzip /tmp/$VSAN65_SDK_PYTHON && \
+  rm -f /tmp/$VSAN65_SDK_PYTHON
+RUN cp /root/vsan-sdk-python/bindings/*.py /root/vsan-sdk-python/samplecode
+
+#### ---- Install VSAN Management SDK for Ruby 6.5 ---- ####
+
+ADD $VSAN65_SDK_RUBY /tmp/
+RUN unzip /tmp/$VSAN65_SDK_RUBY && \
+  rm -f /tmp/$VSAN65_SDK_RUBY
+RUN cp /root/vsan-sdk-ruby/bindings/*.rb /root/vsan-sdk-ruby/samplecode
+
+#### ---- Install OVFTool 4.2 ---- ####
+
+ADD $OVFTOOl42 /tmp/
+RUN /bin/bash /tmp/VMware-ovftool-4.2.0-4586971-lin.x86_64.bundle --eulas-agreed --required --console && \
+  rm -f /tmp/VMware-ovftool-4.2.0-4586971-lin.x86_64.bundle
+
+#### ---- Install VDDK 6.5 ---- ####
+
+ADD $VDDK65 /root/VDDK-6.5
+
+#### ---- PowerCLI Core 1.0 ---- ####
+
+ADD https://download3.vmware.com/software/vmw-tools/powerclicore/PowerCLI_Core.zip /tmp/
+RUN curl -sLO https://github.com/PowerShell/PowerShell/releases/download/v6.0.0-alpha.12/powershell_6.0.0-alpha.12-1ubuntu1.16.04.1_amd64.deb
+RUN dpkg -i /root/powershell_6.0.0-alpha.12-1ubuntu1.16.04.1_amd64.deb && \
+  rm -f /root/powershell_6.0.0-alpha.12-1ubuntu1.16.04.1_amd64.deb
+RUN unzip /tmp/PowerCLI_Core.zip -d /root/powershell && rm -f /tmp/PowerCLI_Core.zip
+RUN mkdir -p /root/.config/powershell/ && mkdir -p /root/.local/share/powershell/Modules
+RUN unzip /root/powershell/PowerCLI.ViCore.zip -d /root/.local/share/powershell/Modules && \
+  unzip /root/powershell/PowerCLI.Vds.zip -d /root/.local/share/powershell/Modules
+RUN mv /root/powershell/Start-PowerCLI.ps1 /root/.config/powershell/Microsoft.PowerShell_profile.ps1 && \
+  rm -rf /root/powershell
+
+#### ---- For the m$ Paint Guru ---- ####
+RUN curl -sL "https://get.docker.com/builds/Linux/x86_64/docker-1.12.3.tgz" -o /tmp/docker-1.12.3.tgz && \
+  tar -zxvf /tmp/docker-1.12.3.tgz
+RUN mv /root/docker/* /usr/bin/
+RUN rm -f /tmp/docker-1.12.3.tgz && rmdir /root/docker
+
+RUN curl -sL "https://github.com/docker/compose/releases/download/1.8.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
+  chmod +x /usr/local/bin/docker-compose
+
+#### ---- Community Sample Code Repositories ---- ####
+
+RUN mkdir script-repos
+RUN git clone https://github.com/lamw/PowerCLI-Example-Scripts /root/script-repos/PowerCLI-Example-Scripts
+RUN git clone https://github.com/lamw/powerclicore-docker-container-samples /root/script-repos/powerclicore-docker-container-samples
+RUN git clone https://github.com/lamw/vghetto-scripts /root/script-repos/vghetto-scripts
+RUN git clone https://github.com/lamw/pyvmomi-community-samples /root-script-repos/pyvmomi-community-samples
 
 # Run Bash when the image starts
 CMD ["/bin/bash"]
