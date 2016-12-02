@@ -19,6 +19,7 @@ There are many reasons, sometimes you just need to quickly access a specific too
 This Dockerfile will create a Docker Container and install the following VMware tools:
 
 * vSphere CLI 6.5
+* govc 6.5
 * PowerCLI Core 1.0
 * vSphere Management SDK 6.5
 * vSphere SDK for Perl 6.5
