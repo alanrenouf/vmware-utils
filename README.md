@@ -44,13 +44,7 @@ This Dockerfile will create a Docker Container and install the following VMware 
 
 ## How
 
-Option 1) You can directly pull this Docker Container from Docker Hub by running the following command:
-
-```console
-docker pull vmware/vmware-utils
-```
-
-Option 2) If you wish to build this Docker Container yourself, you can first need to download the following files from VMware's website (which you must register to do so):
+Before you can use the Docker Container, you will need to build it. First you need to manually download the following files from VMware's website (which you must register to do so):
 
 1. Download vSphere SDK for Perl (which includes vCLI) 6.5 from: https://my.vmware.com/group/vmware/details?downloadGroup=VS-PERL-SDK65&productId=614
 2. Download vSphere Management SDK 6.5 from: https://my.vmware.com/group/vmware/get-download?downloadGroup=VS-MGMT-SDK65
