@@ -25,6 +25,7 @@ This Dockerfile will create a Docker Container and install the following VMware 
 * vSphere SDK for Perl 6.5
 * vSphere SDK for Ruby (rbvmomi)
 * vSphere SDK for Python (pyvmomi)
+* vSphere SDK for Go (govmomi)
 * vSphere Automation SDK for Ruby 6.5
 * vSphere Automation SDK for Python 6.5
 * vSphere Automation SDK for Perl 6.5
