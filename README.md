@@ -12,11 +12,13 @@ Docker Image to deploy various VMware and open source related tools to manage a 
 
 ## Why
 
-There are many reasons, sometimes you just need to quickly access a specific tool like a particular vSphere SDK or RVC and rather than having to deploy an OS or find one that is available, download the tool and then install it, you can easily spin up this Docker Container that already contains the latest version. This is also a fantastic swiss army knife that contains all of the popular VMware Utilities all in one place if you needed to ever troubleshoot an environment on the go and it includes some of the widely popular community code samples all downloaded for you.
+There are many reasons, sometimes you just need to quickly access a specific tool like a particular vSphere SDK or CLI and rather than having to deploy an OS or find one that is available, download the tool and then install it, you can easily spin up this Docker Container that already contains the latest version. This is also a fantastic swiss army knife that contains all of the popular VMware Utilities all in one place if you needed to ever troubleshoot an environment on the go and it includes some of the widely popular community code samples all downloaded for you.
 
 ## What
 
-This Dockerfile will create a Docker Container and install the following VMware tools:
+#### Uber Dockerfile
+
+This Dockerfile will create a "Uber" Docker Container and install the following VMware tools:
 
 * vSphere CLI 6.5
 * govc 6.5
@@ -25,6 +27,7 @@ This Dockerfile will create a Docker Container and install the following VMware 
 * vSphere SDK for Perl 6.5
 * vSphere SDK for Ruby (rbvmomi)
 * vSphere SDK for Python (pyvmomi)
+* vSphere SDK for Go (govmomi)
 * vSphere Automation SDK for Ruby 6.5
 * vSphere Automation SDK for Python 6.5
 * vSphere Automation SDK for Perl 6.5
@@ -41,6 +44,18 @@ This Dockerfile will create a Docker Container and install the following VMware 
 * [Pyvmomi Community Samples](https://github.com/lamw/pyvmomi-community-samples)
 * Docker Client v1.12.3
 * Docker Compose v1.8.1
+
+#### Individual Dockerfiles
+
+If you prefer specific SDK/CLI tools, there are also individual Dockerfile located in the directories below which contain their own README with instructions on how to build/use.
+
+* [vsphere-automation-vsan-sdk-java-6.5](vsphere-automation-vsan-sdk-java-6.5) - vSphere SDK for Java, vSphere Automation SDK for Java & VSAN Management SDK for Java 6.5
+* [vsphere-automation-vsan-sdk-perl-6.5](vsphere-automation-vsan-sdk-perl-6.5) - vSphere SDK for Perl, vSphere CLI, vSphere Automation SDK for Perl & VSAN Management SDK for Perl 6.5
+* [vsphere-automation-vsan-sdk-python-6.5](vsphere-automation-vsan-sdk-python-6.5) - vSphere SDK for Python, vSphere Automation SDK for Python & VSAN Management Python for Java 6.5
+* [vsphere-automation-vsan-sdk-ruby-6.5](vsphere-automation-vsan-sdk-ruby-6.5) - vSphere SDK for Ruby, vSphere Automation SDK for Ruby & VSAN Management SDK for Ruby 6.5
+* [govc-6.5](govc-6.5) - vSphere SDK for Go and govc CLI 6.5
+* [ovftool-4.2](ovftool-4.2)- OVFTool 4.2
+* [vddk-6.5](vddk-6.5) - VDDK 6.5
 
 ## How
 
@@ -79,9 +94,9 @@ vmware-utils
 └── vsan-sdk-65-ruby-4602587.zip
 ```
 
-Now you are ready to build your container!
+Now you are ready to build your container! For individual Docker Containers, please refer to their respective README for build details. 
 
-## Build Container
+## Build Uber Container
 
 1. Change into the vmware-utils directory
 
@@ -91,7 +106,7 @@ Now you are ready to build your container!
 $ docker build -t lamw/vmware-utils .
 ```
 
-## Run Container
+## Run Uber Container
 
 Once the Container has been successfully built, you can run it using the following command:
 
