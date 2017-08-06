@@ -1,7 +1,7 @@
 
 #### ---- Installer Files ---- ####
 
-VSPHERE65_SDK_PERL=VMware-vSphere-CLI-6.5.0-4566394.x86_64.tar.gz
+VSPHERE65_SDK_PERL=VMware-vSphere-Perl-SDK-6.5.0-4566394.x86_64.tar.gz
 VSPHERE65_MGMT_SDK=VMware-vSphereSDK-6.5.0-4571253.zip
 VSPHERE65_AUTOMATION_SDK_RUBY=VMware-vSphere-Automation-SDK-Ruby-6.5.0-4571906.zip
 VSPHERE65_AUTOMATION_SDK_PYTHON=VMware-vSphere-Automation-SDK-Python-6.5.0-4571810.zip
@@ -12,7 +12,7 @@ VSAN65_SDK_PYTHON=vsan-sdk-65-python-4602587.zip
 VSAN65_SDK_JAVA=vsan-sdk-65-java-4602587.zip
 VSAN65_SDK_PERL=vsan-sdk-65-perl-4602587.zip
 VDDK65=VMware-vix-disklib-6.5.0-4604867.x86_64.tar.gz
-OVFTOOl42=VMware-ovftool-4.2.0-4586971-lin.x86_64.bundle
+OVFTOOl42=VMware-ovftool-4.2.0-5965791-lin.x86_64.bundle
 
 #### ---- Install Package Dependencies ---- ####
 
